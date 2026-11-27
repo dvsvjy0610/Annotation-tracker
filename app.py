@@ -7,7 +7,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 
 app = Flask(__name__)
 app.secret_key = "dev-key"
-DB = dict(dbname="annotation_db", user="postgres", password="Nothin!@18", host="localhost")
+DB = DATABASE_URL = os.environ.get("postgresql://annotationtracker_user:OOc9tMYzFujjOq55RT9vbQkfhPGJFDwh@dpg-dc4ope5g1s2s73f91rhg-a.ohio-postgres.render.com/annotationtracker")
 
 
 def query(sql, params=(), fetch=True):
