@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Annotation Tracker</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <nav><b>🎧 Annotation Tracker</b>
+    <a href="{{ url_for('index') }}">Annotations</a>
+    <a href="{{ url_for('stats') }}">Stats</a></nav>
+  <main>
+    {% for m in get_flashed_messages() %}<p class="flash">{{ m }}</p>{% endfor %}
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+  <h3>New annotation</h3>
+  <form method="post" action="{{ url_for('add') }}" class="row">
+    <select name="clip_id">{% for c in clips %}<option value="{{ c.id }}">{{ c.filename }}</option>{% endfor %}</select>
+    <select name="annotator_id">{% for p in people %}<option value="{{ p.id }}">{{ p.name }}</option>{% endfor %}</select>
+    <select name="label">
+      <option>speech</option><option>music</option><option>noise</option><option>multimodal</option>
+    </select>
+    <input name="transcript" placeholder="Transcript (optional)">
+    <button>Save</button>
+  </form>
+  <form method="post" action="{{ url_for('import_csv') }}" enctype="multipart/form-data" class="row">
+    <input type="file" name="file" accept=".csv" required>
+    <button class="ghost">Import clips CSV</button>
+  </form>
+</section>
+
+<section class="card">
+  <form method="get" class="row">
+    <select name="status">
+      <option value="">All status</option>
+      <option value="pending" {{ 'selected' if status=='pending' }}>Pending</option>
+      <option value="reviewed" {{ 'selected' if status=='reviewed' }}>Reviewed</option>
+    </select>
+    <select name="label">
+      <option value="">All labels</option>
+      {% for l in ['speech','music','noise','multimodal'] %}
+      <option {{ 'selected' if label==l }}>{{ l }}</option>{% endfor %}
+    </select>
+    <button class="ghost">Filter</button>
+  </form>
+  <table>
+    <tr><th>Clip</th><th>Sec</th><th>Label</th><th>Transcript</th><th>By</th><th>Status</th><th></th></tr>
+    {% for r in rows %}
+    <tr>
+      <td>{{ r.filename }}</td><td>{{ r.duration_sec }}</td>
+      <td><span class="tag">{{ r.label }}</span></td><td>{{ r.transcript or '—' }}</td>
+      <td>{{ r.annotator }}</td><td class="{{ r.status }}">{{ r.status }}</td>
+      <td>{% if r.status == 'pending' %}
+        <form method="post" action="{{ url_for('review', ann_id=r.id) }}"><button class="ghost">Approve</button></form>
+      {% endif %}</td>
+    </tr>
+    {% else %}<tr><td colspan="7">No annotations yet.</td></tr>{% endfor %}
+  </table>
+</section>
+{% endblock %}
