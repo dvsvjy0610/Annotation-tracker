@@ -8,14 +8,8 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 
 app = Flask(__name__)
 app.secret_key = "dev-key"
-DB = {
-    "host": os.environ.get("DB_HOST"),
-    "port": os.environ.get("DB_PORT", "5432"),
-    "dbname": os.environ.get("DB_NAME"),
-    "user": os.environ.get("DB_USER"),
-    "password": os.environ.get("DB_PASSWORD"),
-    "sslmode": "require",
-}
+
+DATABASE_URL = os.environ.get("DATABASE_URL")
 
 
 
