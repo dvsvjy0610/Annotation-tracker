@@ -8,7 +8,14 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 
 app = Flask(__name__)
 app.secret_key = "dev-key"
-DB = DATABASE_URL = os.environ.get("postgresql://annotationtracker_user:OOc9tMYzFujjOq55RT9vbQkfhPGJFDwh@dpg-dc4ope5g1s2s73f91rhg-a.ohio-postgres.render.com/annotationtracker")
+DB ={ 
+    "host": os.environ.get("dpg-dc4ope5g1s2s73f91rhg-a"),
+    "port": os.environ.get("DB_PORT", "5432"),
+    "dbname": os.environ.get("annotationtracker"),
+    "user": os.environ.get("annotationtracker_user"),
+    "password": os.environ.get("OOc9tMYzFujjOq55RT9vbQkfhPGJFDwh"),
+    "sslmode": "require",
+}
 
 
 def query(sql, params=(), fetch=True):
