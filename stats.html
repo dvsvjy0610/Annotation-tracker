@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Dataset stats</h2>
+{% if empty %}<p>No data yet. Add some annotations first.</p>
+{% else %}
+<div class="grid">
+  <div class="card"><small>Total</small><h1>{{ s.total }}</h1></div>
+  <div class="card"><small>Mean sec</small><h1>{{ s.mean }}</h1></div>
+  <div class="card"><small>Median sec</small><h1>{{ s.median }}</h1></div>
+  <div class="card"><small>Std dev</small><h1>{{ s.std }}</h1></div>
+  <div class="card"><small>Reviewed</small><h1>{{ s.pct_reviewed }}%</h1></div>
+</div>
+<div class="card"><h3>Annotations per label</h3>
+  {% for k, v in by_label.items() %}<p>{{ k }}: <b>{{ v }}</b></p>{% endfor %}</div>
+<div class="card"><h3>Audio seconds per annotator</h3>
+  {% for k, v in by_person.items() %}<p>{{ k }}: <b>{{ v }}</b></p>{% endfor %}</div>
+{% endif %}
+{% endblock %}
